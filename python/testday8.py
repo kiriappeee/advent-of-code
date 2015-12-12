@@ -23,6 +23,12 @@ class Test_Day8(unittest.TestCase):
         self.assertEqual(day8.numberOfCharactersOfCode('"\\x27"'), 6)
         print(day8.numberOfCharacters('"uzezxa\\"jgbmojtwyfbfguz"'))
         print(day8.numberOfCharactersOfCode('"uzezxa\\"jgbmojtwyfbfguz"'))
+    def test_encodeDoubleQuotes(self):
+        self.assertEqual(day8.encode('""'), '\\"\\"')
+    def test_encodeBackSlash(self):
+        self.assertEqual(day8.encode('"abc\\"abc"'), '\\"abc\\\\\\"abc\\"')
+    def test_encodeHexCharacter(self):
+        self.assertEqual(day8.encode('"\\x23"'), '\\"\\\\x23\\"')
 
 if __name__ == "__main__":
     unittest.main()
