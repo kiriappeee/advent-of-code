@@ -161,6 +161,19 @@ class TestComputer(unittest.TestCase):
         }
         print('when asked to give input, give an input of 30')
         self.assertEqual(computer.executeOperation(operation_specification, test_array), 30)
+    def test_number_is_read_from_input_list_correctly(self):
+        test_array = [3,2,21,99]
+        operation_specification = {
+            'opcode': 3,
+            'parameters': [2],
+            'parameter_modes': [0,0,0],
+            'index_of_opcode': 0
+        }
+        print('when asked to give input, give an input of 30')
+        list_of_inputs = [2,3,4]
+        self.assertEqual(computer.executeOperation(operation_specification, test_array, list_of_inputs=list_of_inputs), 2)
+        self.assertEqual(computer.executeOperation(operation_specification, test_array, list_of_inputs=list_of_inputs), 3)
+        self.assertEqual(computer.executeOperation(operation_specification, test_array, list_of_inputs=list_of_inputs), 4)
 
     def test_opcode_four_outputs_number_in_position(self):
         test_array = [4,2,21,99]
@@ -269,47 +282,45 @@ class TestComputer(unittest.TestCase):
     def test_full_operation_runs_on_array(self):
         test_array = [1,9,10,3,2,3,11,0,99,30,40,50]
         expected_result = [3500,9,10,70,2,3,11,0,99,30,40,50]
-        result_received, _ = computer.run_program(test_array) 
+        result_received, _, _ = computer.run_program(test_array) 
         self.assertEqual(result_received, expected_result)
         test_array = [1002,4,3,4,33]
         expected_result = [1002,4,3,4,99]
-        result_received, _ = computer.run_program(test_array) 
+        result_received, _, _ = computer.run_program(test_array) 
         self.assertEqual(result_received, expected_result)
     def test_operations_work_with_input_required(self):
+        list_of_inputs = [8, 121, 2, 8, 8, 90, 3, 0]
         test_array = [int(c) for c in '3,9,8,9,10,9,4,9,99,-1,8'.split(',')]
-        print("Input 8")
-        _, result_received = computer.run_program(test_array)
+        
+        _, result_received, _ = computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 1)
         test_array = [int(c) for c in '3,9,8,9,10,9,4,9,99,-1,8'.split(',')]
-        print("Input a number that is not 8")
-        _, result_received = computer.run_program(test_array)
+        
+        _, result_received, _ = computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 0)
 
         test_array = [int(c) for c in '3,9,7,9,10,9,4,9,99,-1,8'.split(',')]
-        print("Input a number less than 8")
-        _, result_received = computer.run_program(test_array)
+        
+        _, result_received, _= computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 1)
         test_array = [int(c) for c in '3,9,7,9,10,9,4,9,99,-1,8'.split(',')]
-        print("Input 8")
-        _, result_received = computer.run_program(test_array)
+        _, result_received, _= computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 0)
 
         test_array = [int(c) for c in '3,3,1108,-1,8,3,4,3,99'.split(',')]
-        print("Input 8")
-        _, result_received = computer.run_program(test_array)
+        _, result_received, _= computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 1)
         test_array = [int(c) for c in '3,3,1108,-1,8,3,4,3,99'.split(',')]
-        print("Input a number that is not 8")
-        _, result_received = computer.run_program(test_array)
+        _, result_received, _= computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 0)
 
         test_array = [int(c) for c in '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9'.split(',')]
-        print("Input a non 0 number")
-        _, result_received = computer.run_program(test_array)
+        _, result_received, _ = computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 1)
         test_array = [int(c) for c in '3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9'.split(',')]
-        print("Input 0")
-        _, result_received = computer.run_program(test_array)
+        _, result_received, _ = computer.run_program(test_array, list_of_inputs=list_of_inputs)
         self.assertEqual(result_received[-1], 0)
+
+
 if __name__ == "__main__":
     unittest.main()

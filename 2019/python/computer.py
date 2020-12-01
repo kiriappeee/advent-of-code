@@ -29,7 +29,7 @@ def getNextOperationMembers(array_to_extract_next_operation_from, starting_index
         next_operation_to_return['parameters'] = array_to_extract_next_operation_from[starting_index+1:starting_index+3]
         
     return next_operation_to_return
-def executeOperation(operation_specification, array_to_read_from):
+def executeOperation(operation_specification, array_to_read_from, list_of_inputs=[], end_on_manual_read=False):
     # print(operation_specification)
     parameters = operation_specification['parameters']
     parameter_modes = operation_specification['parameter_modes']
@@ -44,10 +44,18 @@ def executeOperation(operation_specification, array_to_read_from):
         return (values[0]
                 * values[1])
     elif operation_specification['opcode'] == 3:
-        return int(input('Please enter the number to store: '))
+        if (len(list_of_inputs) > 0):
+            output = list_of_inputs.pop(0)
+            print(output)
+            return output
+        elif end_on_manual_read:
+            return None
+        else:
+            return int(input('Please enter the number to store: '))
     elif operation_specification['opcode'] == 4:
         return values[0]
     elif operation_specification['opcode'] == 5:
+        print(values[0], values[1])
         if values[0] != 0:
             return values[1]
         else:
@@ -68,15 +76,17 @@ def executeOperation(operation_specification, array_to_read_from):
         else:
             return 0
 
-def run_program(full_array):
-    instruction_pointer = 0
+def run_program(full_array, list_of_inputs = [], starting_pointer = 0, end_on_manual_read = False):
+    instruction_pointer = starting_pointer
     outputs = []
     while True:
         next_operation_members = getNextOperationMembers(full_array, instruction_pointer)
-        execution_result = executeOperation(next_operation_members, full_array)
+        print(next_operation_members)
+        execution_result = executeOperation(next_operation_members, full_array, list_of_inputs, end_on_manual_read)
         if execution_result is not None:
             if next_operation_members['opcode'] == 4:
                 outputs.append(execution_result)
+                # print(outputs)
             if next_operation_members['opcode'] not in [5,6]:
                 full_array[next_operation_members['parameters'][-1]] = execution_result
                 instruction_pointer = len(next_operation_members['parameters']) + 1 + next_operation_members['index_of_opcode']
@@ -87,4 +97,7 @@ def run_program(full_array):
                     instruction_pointer = execution_result
         else:
             break
-    return full_array, outputs
+    if next_operation_members['opcode'] == 3:
+        return full_array, outputs, instruction_pointer
+    else:
+        return full_array, outputs, None
