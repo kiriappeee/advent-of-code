@@ -16,7 +16,8 @@ def find_three_numbers_that_sum_up_to_expected(numbers=[], expected_sum=0):
 if __name__ == "__main__":
   args = sys.argv
   with open('python/inputday01.txt') as f:
-    puzzle_input = [int(x) for x in f.readlines() if x.strip() != ""]
+    puzzle_input = sorted([int(x) for x in f.readlines() if x.strip() != ""])
+
   if args[1] == "1":
     output = find_two_numbers_that_sum_up_to_expected(numbers=puzzle_input, expected_sum=2020)
     print(output)
