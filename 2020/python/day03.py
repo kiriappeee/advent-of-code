@@ -16,7 +16,7 @@ def is_coord_at_tree(hill_map, current_coord):
   x, y = current_coord
   return hill_map[y][x] == "#"
 
-def count_number_of_trees_on_run(hill_map, repeating_instruction, starting_coord=[0,0], pattern_size=12):
+def count_number_of_trees_on_run(hill_map, repeating_instruction, starting_coord=[0,0], pattern_size=11):
   current_coord = starting_coord
   tree_count = 0
   if is_coord_at_tree(hill_map, current_coord):
@@ -24,6 +24,8 @@ def count_number_of_trees_on_run(hill_map, repeating_instruction, starting_coord
 
   while True:
     current_coord = get_coords_after_instruction(current_coord, repeating_instruction)
+    print(current_coord)
+    print(tree_count)
     if current_coord[1]>=len(hill_map):
       print('Reached end')
       break
@@ -37,9 +39,9 @@ if __name__ == "__main__":
   args = sys.argv
   with open('python/inputday03.txt') as f:
     hill_map = [x.strip() for x in f.readlines() if x.strip() != ""]
+    pattern_size = len(hill_map[0])
 
   if args[1] == "1":
-    pattern_size = len(hill_map[0])
     repeating_instruction = {
       'r': 3,
       'd': 1
@@ -47,4 +49,40 @@ if __name__ == "__main__":
     tree_count = count_number_of_trees_on_run(hill_map, repeating_instruction, pattern_size=pattern_size)
     print(tree_count)
   if args[1] == "2":
-    pass
+    multiple_result = 1
+    repeating_instruction = {
+      'r': 1,
+      'd': 1
+    }
+    tree_count = count_number_of_trees_on_run(hill_map.copy(), repeating_instruction, pattern_size=pattern_size)
+    multiple_result*=tree_count
+
+    repeating_instruction = {
+      'r': 3,
+      'd': 1
+    }
+    tree_count = count_number_of_trees_on_run(hill_map.copy(), repeating_instruction, pattern_size=pattern_size)
+    multiple_result*=tree_count
+
+    repeating_instruction = {
+      'r': 5,
+      'd': 1
+    }
+    tree_count = count_number_of_trees_on_run(hill_map.copy(), repeating_instruction, pattern_size=pattern_size)
+    multiple_result*=tree_count
+
+    repeating_instruction = {
+      'r': 7,
+      'd': 1
+    }
+    tree_count = count_number_of_trees_on_run(hill_map.copy(), repeating_instruction, pattern_size=pattern_size)
+    multiple_result*=tree_count
+
+    repeating_instruction = {
+      'r': 1,
+      'd': 2
+    }
+    tree_count = count_number_of_trees_on_run(hill_map.copy(), repeating_instruction, pattern_size=pattern_size)
+    multiple_result*=tree_count
+
+    print(multiple_result)

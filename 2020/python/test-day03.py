@@ -53,6 +53,29 @@ class TestDay03(unittest.TestCase):
     }
     self.assertEqual(day03.count_number_of_trees_on_run(final_map, repeating_instruction), 7)
 
+    repeating_instruction = {
+      'r': 1,
+      'd': 1
+    }
+    self.assertEqual(day03.count_number_of_trees_on_run(final_map, repeating_instruction), 2)
+
+    repeating_instruction = {
+      'r': 5,
+      'd': 1
+    }
+    self.assertEqual(day03.count_number_of_trees_on_run(final_map, repeating_instruction), 3)
+
+    repeating_instruction = {
+      'r': 7,
+      'd': 1
+    }
+    self.assertEqual(day03.count_number_of_trees_on_run(final_map, repeating_instruction), 4)
+
+    repeating_instruction = {
+      'r': 1,
+      'd': 2
+    }
+    self.assertEqual(day03.count_number_of_trees_on_run(final_map, repeating_instruction), 2)
 
 if __name__ == "__main__":
   unittest.main()
