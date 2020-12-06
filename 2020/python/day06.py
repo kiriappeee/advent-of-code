@@ -1,4 +1,5 @@
 import sys
+from collections import Counter
 
 if __name__ == "__main__":
   args = sys.argv
@@ -21,4 +22,10 @@ if __name__ == "__main__":
       total_yes_count += len(set(''.join(answer_group)))
     print(total_yes_count)
   if args[1] == "2":
-    pass
+    total_yes_count = 0
+    for answer_group in answer_groups:
+      c = Counter(''.join(answer_group))
+      for i in c:
+        if c[i] == len(answer_group):
+          total_yes_count += 1
+    print(total_yes_count)
