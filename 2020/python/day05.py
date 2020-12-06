@@ -33,6 +33,18 @@ if __name__ == "__main__":
       seat_id = get_seat_id([seat_row, seat_column])
       largest_id = max(largest_id, seat_id)
     print(largest_id)
-
   if args[1] == "2":
+    generated_seats = []
+    seats_in_list = []
+    for r in range(0,127):
+      for c in range(0,7):
+        generated_seats.append(get_seat_id([r,c]))
+    for seat in seats:
+      seat_row = get_row(seat[:7])
+      seat_column = get_column(seat[7:])
+      seats_in_list.append(get_seat_id([seat_row, seat_column]))
+    for generated_seat in generated_seats:
+      if generated_seat not in seats_in_list:
+        if generated_seat - 1 and generated_seat + 1 in seats_in_list:
+          print(generated_seat)
     pass
