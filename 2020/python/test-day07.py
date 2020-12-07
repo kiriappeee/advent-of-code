@@ -118,5 +118,42 @@ dotted black bags contain no other bags.""".split('\n')
 
     self.assertEqual(day07.get_bags_that_eventually_contain_given_colour("shiny gold", test_input), 4)
 
+  def test_number_of_bags_required_can_be_found_correctly(self):
+    test_input = {
+      "light red": {
+        "bright white": 1,
+        "muted yellow": 2
+      },
+      "dark orange": {
+        "bright white": 3,
+        "muted yellow": 4
+      },
+      "bright white": {
+        "shiny gold": 1
+      },
+      "muted yellow": {
+        "shiny gold": 2,
+        "faded blue": 9
+      },
+      "shiny gold": {
+        "dark olive": 1,
+        "vibrant plum": 2
+      },
+      "dark olive": {
+        "faded blue": 3,
+        "dotted black": 4
+      },
+      "vibrant plum": {
+        "faded blue": 5,
+        "dotted black": 6,
+      },
+      "faded blue": {},
+      "dotted black": {}
+    }
+
+    self.assertEqual(day07.get_number_of_bags_required("shiny gold", test_input), 32)
+
+
+
 if __name__ == "__main__":
   unittest.main()
