@@ -16,11 +16,14 @@ def get_power_value_from_diagnostics(diagnostics):
     gamma_value = ""
     epilson_value = ""
     while position < len(diagnostics[0]):
-        gamma_value_to_add, epilson_value_to_add = get_gamma_and_epilson_rate_for_pos(diagnostics, position)
+        gamma_value_to_add, epilson_value_to_add = get_gamma_and_epilson_rate_for_pos(
+            diagnostics, position
+        )
         gamma_value += str(gamma_value_to_add)
         epilson_value += str(epilson_value_to_add)
         position += 1
     return int(gamma_value, 2) * int(epilson_value, 2)
+
 
 def get_o2_rating_list_for_pos(diagnostics, position):
     gamma_rating = str(get_gamma_and_epilson_rate_for_pos(diagnostics, position)[0])
@@ -30,6 +33,7 @@ def get_o2_rating_list_for_pos(diagnostics, position):
             o2_rating_list.append(diagnostic)
     return o2_rating_list
 
+
 def get_co2_rating_list_for_pos(diagnostics, position):
     epilson_rating = str(get_gamma_and_epilson_rate_for_pos(diagnostics, position)[1])
     co2_rating_list = []
@@ -38,18 +42,20 @@ def get_co2_rating_list_for_pos(diagnostics, position):
             co2_rating_list.append(diagnostic)
     return co2_rating_list
 
+
 def get_life_rating(diagnostics):
     o2_rating_list = diagnostics
     position = 0
-    while len(o2_rating_list)>1:
+    while len(o2_rating_list) > 1:
         o2_rating_list = get_o2_rating_list_for_pos(o2_rating_list, position)
         position += 1
     co2_rating_list = diagnostics
     position = 0
-    while len(co2_rating_list)>1:
+    while len(co2_rating_list) > 1:
         co2_rating_list = get_co2_rating_list_for_pos(co2_rating_list, position)
         position += 1
     return int(o2_rating_list[0], 2) * int(co2_rating_list[0], 2)
+
 
 if __name__ == "__main__":
     args = sys.argv

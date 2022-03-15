@@ -1,6 +1,7 @@
 import unittest
 from . import day01
 
+
 class TestDay1(unittest.TestCase):
     def test_measurement_increase_count_can_be_found(self):
         test_list = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
@@ -19,7 +20,7 @@ class TestDay1(unittest.TestCase):
         test_list = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
         answer = day01.count_measurement_increase_by_windows(test_list)
         self.assertEqual(answer, 5)
-  
+
+
 if __name__ == "__main__":
     unittest.main()
-
